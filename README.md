@@ -1,4 +1,4 @@
-This work is an enhanced with previous works from 
+This work is enhanced with previous works from 
 
 # Fedlearn - https://github.com/adesgautam/Fedlearn
 # FederateLearning_Rest - https://github.com/pinyaras/FederateLearning_Rest
