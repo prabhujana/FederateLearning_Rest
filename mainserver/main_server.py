@@ -15,7 +15,7 @@ def client_status():
 
 	if request.method == 'POST':
 		client_port = request.json['client_id']
-		
+
 		with open('clients.txt', 'a+') as f:
 			f.write('http://localhost:' + client_port + '/\n')
 
@@ -29,7 +29,7 @@ def client_status():
 			return "Client status not OK!"
 	else:
 		return "Client GET request received!"
-		
+
 @app.route('/secagg_model', methods=['POST'])
 def get_secagg_model():
 	if request.method == 'POST':
@@ -43,11 +43,11 @@ def get_secagg_model():
 
 		# with open('clients.txt', 'a+') as f:
 		# 	f.write(cli)
-		
+
 		# print(fname, cli)
 		wfile = open("agg_model/"+fname, 'wb')
 		wfile.write(file)
-			
+
 		return "Model received!"
 	else:
 		return "No file received!"
@@ -66,11 +66,11 @@ def getmodel():
 
 		# with open('clients.txt', 'a+') as f:
 		# 	f.write(cli)
-		
+
 		print(fname)
 		wfile = open("client_models/"+fname, 'wb')
 		wfile.write(file)
-			
+
 		return "Model received!"
 	else:
 		return "No file received!"
@@ -82,12 +82,12 @@ def perform_model_aggregation():
 
 
 @app.route('/send_model_clients')
-def send_agg_to_clients():
-	# clients = ''
-	# with open('clients.txt', 'r') as f:
-	# 	clients = f.read()
-	# clients = clients.split('\n')
-	clients = ['http://localhost:8001/', 'http://localhost:8002/']
+def send_agg_to_clients(i):
+	clients = []
+	clients.append(i)
+
+	print('Clients:',clients)
+
 	for c in clients:
 		if c != '':
 			file = open("agg_model/agg_model.h5", 'rb')
@@ -96,12 +96,9 @@ def send_agg_to_clients():
 				'json': ('json_data', json.dumps(data), 'application/json'),
 				'model': ('agg_model.h5', file, 'application/octet-stream')
 			}
-			
-			print(c+'aggmodel')
-			req = requests.post(url=c+'aggmodel', files=files)
+			print(c+'/aggmodel')
+			req = requests.post(url=c+'/aggmodel', files=files)
 			print(req.status_code)
-	
-	# print(req.text)
 	return "Aggregated model sent !"
 
 @app.route('/send_agg_to_client')
@@ -114,28 +111,14 @@ def send_agg_to_client(client):
 			'json': ('json_data', json.dumps(data), 'application/json'),
 			'model': ('agg_model.h5', file, 'application/octet-stream')
 		}
-		
+
 		print(c+'aggmodel')
-		req = requests.post(url=c+'aggmodel', files=files)
+		req = requests.post(url=c+'/aggmodel', files=files)
 		print(req.status_code)
-	
+
 	# print(req.text)
 	return "Aggregated model sent !"
 
 
 if __name__ == '__main__':
 	app.run(host='localhost', port=8000, debug=False, use_reloader=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
