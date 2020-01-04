@@ -1,18 +1,14 @@
-import ast
-import math
-import time
 import requests, json
-import concurrent.futures
 import asyncio, aiohttp
 
 from fl_agg import model_aggregation
-from main_server import send_agg_to_clients, reg_workers
+from main_server import send_agg_to_clients
 from requests.exceptions import HTTPError
-from datetime import datetime
 
-
-# define rest end points here.
-workers = reg_workers()
+def get_workers():
+    url = "http://localhost:8000/get_workers"
+    all_workers = requests.get(url)
+    return json.loads(all_workers.content.decode('utf-8'))
 
 # Performs model training by calling /modeltrain endpoint at the workers
 async def fetch(session, url):
@@ -30,7 +26,6 @@ async def fetch(session, url):
 # to keep track of which workers have completed tasks and ready for next round of training
 async def sync(epoch, current_worker):
     g_tasks = []
-    task_res =[]
 
     # For 1st epoch we wait untill all worker finishses their training, we keep track of epochs
     print('new_epoch:', epoch)
@@ -49,7 +44,7 @@ async def sync(epoch, current_worker):
                 # Once new training is launched, remove the workerid from current_worker list to avoid repeated training
                 current_worker.remove(worker)
             done,pending = await asyncio.wait(g_tasks,return_when=asyncio.FIRST_COMPLETED)
-            
+
     model_aggregation()
 
     # For workers that finished tasks, perform aggregation and send the new model. Add the workerid to current_worker
@@ -68,6 +63,8 @@ async def main_sync():
 
 epoch = 0
 current_worker = []
+workers = get_workers()
+print('Workers:', workers)
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main_sync())
 loop.run_forever()
