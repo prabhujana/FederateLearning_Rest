@@ -10,7 +10,7 @@ import numpy as np
 import glob
 from os import path
 import os
-import time
+
 batch_size = 32
 num_classes = 10
 epochs = 1
@@ -20,8 +20,7 @@ img_rows, img_cols = 28, 28
 input_shape = (img_rows, img_cols, 1)
 
 def process_data():
-    labels = [1,3,5,7,9]
-
+    labels = [0,2,4,6,8]
     print("Processing data...")
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
     x_train = x_train.reshape(x_train.shape[0], img_rows, img_cols, 1)
@@ -30,17 +29,8 @@ def process_data():
     x_test = x_test.astype('float32')
     x_train /= 255
     x_test /= 255
-
-    # x_train  =  x_train[np.where(y_train > 3 and y_train < 10)]
-    # y_train =  y_train[np.where(y_train > 3 and y_train < 10)]
-    # x_test  =  x_test[np.where(y_test > 3 and y_test < 10 )] 
-    # y_test = y_train[np.where(y_test > 3 and y_test < 10)]
-
-    print(x_test.shape[0], 'test samples')
-
     y_train = keras.utils.to_categorical(y_train, num_classes)
     y_test = keras.utils.to_categorical(y_test, num_classes)
-
     return x_train[:100], x_test[:100], y_train[:100], y_test[:100]
 
 def build_model(x_train, y_train, x_test, y_test):
@@ -67,12 +57,9 @@ def build_model(x_train, y_train, x_test, y_test):
                       optimizer=keras.optimizers.Adadelta(),
                       metrics=['accuracy'])
 
-
-
         model.compile(loss=keras.losses.categorical_crossentropy,
                       optimizer=keras.optimizers.Adadelta(),
                       metrics=['accuracy'])
-
     model.fit(x_train, y_train,
               batch_size=batch_size,
               epochs=epochs,
@@ -86,8 +73,8 @@ def evaluate_model(model, x_test, y_test):
     print('Test accuracy:', score[1])
 
 def save_local_model_update(model):
-    mod1 = model.get_weights()
-    np.save('local_model/mod1', mod1)
+    mod2 = model.get_weights()
+    np.save('local_model/mod2', mod2)
     print("Local model update written to local storage!")
 
 def train():
@@ -95,16 +82,3 @@ def train():
     model = build_model(x_train, y_train, x_test, y_test)
     evaluate_model(model, x_test, y_test)
     save_local_model_update(model)
-
-
-
-
-
-
-
-
-
-
-
-
-
