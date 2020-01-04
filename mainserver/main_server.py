@@ -7,8 +7,11 @@ app = Flask(__name__)
 
 workers = []
 
+@app.route('/get_workers', methods=['GET'])
 def reg_workers():
-	return workers
+	if request.method == 'GET':
+		resp = json.dumps(workers)
+		return resp
 
 @app.route('/register', methods=['POST'])
 def register_worker():
