@@ -48,12 +48,15 @@ async def sync(epoch, current_worker):
                 # Once new training is launched, remove the workerid from current_worker list to avoid repeated training
                 current_worker.remove(worker)
             done,pending = await asyncio.wait(g_tasks,return_when=asyncio.FIRST_COMPLETED)
+    
+    # Perform model aggregation over received client models
+    model_aggregation()
 
-    # For workers that finished tasks, perform aggregation and send the new model. Add the workerid to current_worker
+    # For workers that finished tasks, send the aggregated model. Add the workerid to current_worker
     # list for initiating next round of training
+    
     for i in done:
         workerid = i.result()
-        model_aggregation()
         send_agg_to_clients(workerid)
         current_worker.append(workerid)
         print('Done worker:', current_worker)
