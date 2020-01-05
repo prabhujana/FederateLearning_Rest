@@ -12,17 +12,24 @@ An implementation to simulate a Asynchronous federated learning environment.
 * Flask
 
 ## Run the system using the steps below:
-### Booting up
-1. Run "Device 1" using `python app.py`
-2. Run "Device 2" using `python app.py`
-3. Run "Main Server" using `python main_server.py`
+### Booting up for local simulation
+1. Run "Device1" using `python app.py --host localhost --workerid 1 --agg localhost --port 8000`.
+   Device1 Rest server will be functional (eg: http://localhost:8001 ) Access help by using `python app.py --help`.
+   
+   Worker port number is determined based on the --workerid.
+   
+   To run multiple workers, just copy folder Device1 and create new folder for each worker. 
+
+2. Run "Main Server" using `python main_server.py`. This will instantiate REST services on Main server or aggregator.
+
+3. You can start asynchronous training using `python train_async.py`
+
 
 This will start the Flask servers of the two devices and the main server.
 
 Servers - 
 * Main server - `http://localhost:8000/`
-* Device1 - `http://localhost:8001/`
-* Device2 - `http://localhost:8002/`
+* Worker - `http://localhost:8001/`
 
 
 Everything will work using the REST APIs. 
