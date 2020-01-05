@@ -14,14 +14,14 @@ An implementation to simulate a Asynchronous federated learning environment.
 ## Run the system using the steps below:
 ## Booting up for local simulation
 
-# Worker
+### Worker
 1. Go to folder `Device1`. Run "Device1" using `python app.py --host localhost --workerid 1 --agg localhost --port 8000`. Device1 will be worker. Device1 Rest server will be functional (eg: http://localhost:8001 ). 
 
 Access help by using `python app.py --help`.
 
 Worker port number is determined based on the --workerid. To run multiple workers, just copy folder Device1 and create new folder for each worker.
 
-# Aggregator
+### Aggregator
 2. Go to folder `Main Server`. Run "Main Server" using `python main_server.py`. This will instantiate REST services on Main server or aggregator.
 
 3. You can start asynchronous training using `python train_async.py`
