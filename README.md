@@ -9,6 +9,8 @@ An implementation to simulate a Asynchronous federated learning environment.
 * Python 3.6.1
 * Keras
 * Flask
+* aiohttp
+* tensorflow 1.15
 
 ## Booting up for local simulation
 
