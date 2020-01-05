@@ -3,7 +3,6 @@ This work is enhanced with previous works from
 ## Fedlearn - https://github.com/adesgautam/Fedlearn
 ## FederateLearning_Rest - https://github.com/pinyaras/FederateLearning_Rest
 
-
 An implementation to simulate a Asynchronous federated learning environment.
 
 ### Tech stack
@@ -11,7 +10,6 @@ An implementation to simulate a Asynchronous federated learning environment.
 * Keras
 * Flask
 
-## Run the system using the steps below:
 ## Booting up for local simulation
 
 ### Worker
