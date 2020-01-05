@@ -1,7 +1,7 @@
 This work is enhanced with previous works from 
 
-# Fedlearn - https://github.com/adesgautam/Fedlearn
-# FederateLearning_Rest - https://github.com/pinyaras/FederateLearning_Rest
+## Fedlearn - https://github.com/adesgautam/Fedlearn
+## FederateLearning_Rest - https://github.com/pinyaras/FederateLearning_Rest
 
 
 An implementation to simulate a Asynchronous federated learning environment.
